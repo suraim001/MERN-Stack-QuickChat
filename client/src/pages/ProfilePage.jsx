@@ -1,17 +1,34 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { redirect, useNavigate } from 'react-router-dom';
 import assets from '../assets/assets';
+import { AuthContext } from '../../context/AuthContext';
 
 const ProfilePage = () => {
 
+  const {authUser, updateProfile} = useContext(AuthContext);
+
   const [selectedImg, setSelectedImg] = useState(null);
   const navigate = useNavigate();
-  const [name, setName] = useState("Martin Johnson");
-  const [bio, setBio] = useState("Hi Everyone, I am using QuickChat");
+  const [name, setName] = useState(authUser.fullName);
+  const [bio, setBio] = useState(authUser.bio);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/')
+    if(!selectedImg){
+      await updateProfile({fullName: name, bio});
+      navigate('/');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImg);
+    reader.onload = async ()=> {
+      const base64Image = reader.result;
+      await updateProfile({profilePic: base64Image, fullName: name, bio});
+      navigate('/');
+
+    }
+   
   }
 
 
@@ -21,7 +38,7 @@ const ProfilePage = () => {
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 p-10 flex-1'>
         <h3 className='place-self-center text-3xl font-extrabold'>Profie details</h3>
         <label htmlFor="avatar" className='flex flex-col items-center gap-3 cursor-pointer'>
-          <img src={selectedImg ? URL.createObjectURL(tailsselectedImg) : assets.avatar_icon} className={`w-12 h-12 ${selectedImg && 'rounded-full'}`}/>
+          <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} className={`w-12 h-12 ${selectedImg && 'rounded-full'}`}/>
           <input onChange={(e)=>setSelectedImg(e.target.files[0])} type="file" id='avatar' accept='.png, .jpg, .jpeg' hidden />
           Change profile picture
         </label>
@@ -31,10 +48,9 @@ const ProfilePage = () => {
           Save
         </button>
       </form>
-      <img className='max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10' src={assets.logo_icon} alt="" />
+      <img className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} src={assets.logo_icon} alt="" />
       </div>
     </div>
   )
 }
-
 export default ProfilePage

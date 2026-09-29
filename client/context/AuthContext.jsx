@@ -37,7 +37,7 @@ export const AuthProvider = ({ children })=>{
                 setAuthUser(data.userData);
                 connectSocket(data.userData);
                 axios.defaults.headers.common["token"] = data.token;
-                setToken(data.userData);
+                setToken(data.token);
                 localStorage.setItem("token", data.token);
                 toast.success(data.message);
             }else{
