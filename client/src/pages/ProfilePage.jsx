@@ -38,7 +38,7 @@ const ProfilePage = () => {
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 p-10 flex-1'>
         <h3 className='place-self-center text-3xl font-extrabold'>Profie details</h3>
         <label htmlFor="avatar" className='flex flex-col items-center gap-3 cursor-pointer'>
-          <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} className={`w-12 h-12 ${selectedImg && 'rounded-full'}`}/>
+          <img src={selectedImg ? URL.createObjectURL(selectedImg) : authUser?.profilePic || assets.avatar_icon} className={`w-12 h-12 rounded-full`}/>
           <input onChange={(e)=>setSelectedImg(e.target.files[0])} type="file" id='avatar' accept='.png, .jpg, .jpeg' hidden />
           Change profile picture
         </label>
@@ -48,7 +48,7 @@ const ProfilePage = () => {
           Save
         </button>
       </form>
-      <img className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} src={assets.logo_icon} alt="" />
+      <img className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} src={ authUser?.profilePic || assets.logo_icon} alt="" />
       </div>
     </div>
   )

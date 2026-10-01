@@ -86,6 +86,7 @@ export const AuthProvider = ({ children })=>{
 
         newSocket.on("getOnlineUsers", (userIds) => {
             setOnlineUsers(userIds);
+            // console.log("Online users received from server:", userIds);
         })
     }
 
