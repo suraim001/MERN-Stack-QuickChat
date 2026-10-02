@@ -11,6 +11,7 @@ export const ChatProvider = ({ children }) => {
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
     const [unseenMessages, setUnseenMessages] = useState({});
 
     const {socket, axios} = useContext(AuthContext);
@@ -98,7 +99,7 @@ export const ChatProvider = ({ children }) => {
     }, [socket, selectedUser]);
 
     const value= {
-        messages, users, selectedUser, getUsers, getMessages, sendMessage, setSelectedUser, unseenMessages, setUnseenMessages
+        messages, users, selectedUser, getUsers, getMessages, sendMessage, setSelectedUser, unseenMessages, setUnseenMessages, isRightSidebarOpen, setIsRightSidebarOpen
     }
 
     return (
