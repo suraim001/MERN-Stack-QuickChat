@@ -19,7 +19,7 @@ const RightSidebar = () => {
 
  
   return selectedUser && (
-    <div className={`bg-[#8185B2]/10 text-white w-full relative overflow-y-scroll ${isRightSidebarOpen ? 'block' : 'hidden'} ${isRightSidebarOpen ? 'md:block' : 'md:hidden'}`}>
+    <div className={`bg-[#8185B2]/10 text-white w-full relative rounded-l-xl overflow-y-scroll ${isRightSidebarOpen ? 'block' : 'hidden'} ${isRightSidebarOpen ? 'md:block' : 'md:hidden'}`}>
       <button type="button" onClick={() => setIsRightSidebarOpen(false)} className='absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-2xl text-white cursor-pointer hover:bg-white/20'>
         ×
       </button>
